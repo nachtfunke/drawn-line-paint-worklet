@@ -2,6 +2,8 @@
 
 ![Text showing a wobbly underline, that looks almost hand-drawn](example.png)
 
+[Some examples of what you can do with this on Codepen](https://codepen.io/thomassemmler/pen/JjyErxw).
+
 This really simple paint worklet allows you to draw a horizontal line at the bottom of elements that looks hand-drawn, ish. I made this mostly because I really wanted to have a hand-drawn look for my text-underlines. That's also the reason for why you can't customize for every possible situation. But you could just take the code in `worklet.js` and adopt it to your liking!
 
 ## Install it to your project
