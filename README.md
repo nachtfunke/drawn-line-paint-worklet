@@ -1,55 +1,31 @@
-# 11ty CSS Houdini Worklet Generator
+# Drawn Line CSS paintWorklet
 
-> From Stephanie Eckles [@5t3ph](https://twitter.com/5t3ph) - author of [ModernCSS.dev](https://moderncss.dev) and [11ty.Rocks](https://11ty.rocks).
+![Text showing a wobbly underline, that looks almost hand-drawn](example.png)
 
-This worklet was produced using [Eleventy](https://11ty.dev) as the server environment.
+This really simple paint worklet allows you to draw a horizontal line at the bottom of elements that looks hand-drawn, ish. I made this mostly because I really wanted to have a hand-drawn look for my text-underlines. That's also the reason for why you can't customize for every possible situation. But you could just take the code in `worklet.js` and adopt it to your liking!
 
-## Worklet Demo
+## Adding the Paint Worklet
 
-The very simple worklet that is included in this generator can be viewed in [this CodePen demo](https://codepen.io/5t3ph/pen/NWRpMbv).
+This depends a bit on your processing. If you are going for the single-file dependency, add the `register.js` file to your document:
 
-The demo shows how to include the required polyfill and then require the worklet within a script tag, and how to modify it's display attributes via CSS custom properties.
+```html
+<script type="module" src="register.js"></script>
+```
 
-## To Use the Generator
+The `type="module"` may not be needed, depending of whether and how you process the file(s) in your project.
 
-CSS Houdini worklets require a server to run. While there are many ways to create an envirnoment for developing and testing your worklet. As a static site generator, Eleventy provides a slim way to get setup and testing quickly so you can focus on creating your worklet!
+`register.js` registers the paint worklet _and_ it registers the CSS custom properties via `CSS.registerProperty()` that you can use to adjust the line generation. This is important, because the [CSS typed OM](https://www.w3.org/TR/css-typed-om-1/) allows for intuitive and easy processing of values.
 
-**Before you begin** - be sure to update the `package.json` details to your own!
+You can of course do this yourself, if you'd like to do so. In that case, refer to the `worklet.js` file for the paint worklet code and refer to the `properties.js`, or take them to CSS and register them in CSS with `@property` instead - whatever you prefer. But make sure that you **do not skip the step of registering the custom properties in some way**, otherwise the worklet will not work correctly.
 
-### Project Structure
+## Custom Properties
 
-_The following are all within `src` which is your working directory_
+These are the properties that the paint worklet registers:
 
-`_includes/base.njk` - a simple HTML5 template that includes the (currently required) polyfill for the CSS Houdini Paint API, as well as the `CSS.paintWorklet.addModule` pointing to the worklet's location on the local server
-
-`css/style.css` - the local server styles, this is where you add your worklet to your test elements
-
-`index.md` - produces the index content, and can be swapped to another one of [11ty's supported templating languages]()
-
-`worklet.js` - the critical file that creates and registers your worklet class
-
-### Development
-
-`npm start` - will run the project locally by launching Eleventy in watch mode and include a localhost server with hot reload provided by Browsersync.
-
-## Publishing / Using Your Worklet
-
-The recommendation from [Houdini.How](https://houdini.how) is to publish your worklet as an npm package so that it can be imported _and_ used by accessing it on a CDN such as [unpkg](https://unpkg.com).
-
-This is because of the requirement of running via HTTPS, so unpkg makes it easy to share and include elsewhere such as CodePen.
-
-**To publish via npm**, you will first need to [set up an account](https://www.npmjs.com/signup).
-
-Then within your local project, run `npm publish`.
-
-> The included `prepublish` command will ensure Eleventy has been freshly run to ensure the latest version of your worklet is available.
-
-Within a few minutes you will see your package added to your npm account, and then it will also be available at `https://unpkg.com/your-package-name`
-
-Review the [CodePen Demo](https://codepen.io/5t3ph/pen/NWRpMbv) to see how to then include it outside of your local project.
-
-### Updating Your Worklet
-
-If you make changes to your worklet, use the included `bump` command to easily increment your package number, ex: `npm run bump patch`, then proceed to run `npm publish`.
-
-Your changes will be available within a few minutes.
+| property | purpose | default |
+|---|---|---|
+| `--drawn-line-color` | `<color>` - set a color for the line | `black` |
+| `--drawn-line-strength` | `<length>` - set the thickness of the line | `2px` |
+| `--drawn-line-wiggle` | `<integer>` - adjust how _wiggly_ the line is | `1` |
+| `--drawn-line-curve-range` | `<length>` - set how high the line can wiggle to the top | `1px` |
+| `--drawn-line-segment-size` | `<length>` - set the size of an individual segment, in which curves are being generated | `12px` |
