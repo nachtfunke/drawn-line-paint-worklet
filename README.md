@@ -4,15 +4,33 @@
 
 This really simple paint worklet allows you to draw a horizontal line at the bottom of elements that looks hand-drawn, ish. I made this mostly because I really wanted to have a hand-drawn look for my text-underlines. That's also the reason for why you can't customize for every possible situation. But you could just take the code in `worklet.js` and adopt it to your liking!
 
-## Adding the Paint Worklet
+## Install it to your project
 
-This depends a bit on your processing. If you are going for the single-file dependency, add the `register.js` file to your document:
+Paste ye olde npm code into the semi-transparent dark window of your choice:
+
+```bash
+npm i drawn-line-paint-worklet
+```
+
+And then process the files further to your liking. If you don't do that in your project, going the NPM route is not the way to go. Instead, copy and paste the code, or utilize the CDN.
+
+### Via CDN
+
+```html
+<script src="https://unpkg.com/drawn-line-paint-worklet@1.0.0/dist/worklet.js"></script>
+```
+
+Make sure to also register the custom properties. See instructions further below.
+
+### Adding the Paint Worklet
+
+If you have the files available to you locally, you can rely on `register.js` to do everything:
 
 ```html
 <script type="module" src="register.js"></script>
 ```
 
-The `type="module"` may not be needed, depending of whether and how you process the file(s) in your project.
+The `type="module"` may not be needed, depending of whether and how you process the file(s) in your project. This is not gonna be possible to do with 
 
 `register.js` registers the paint worklet _and_ it registers the CSS custom properties via `CSS.registerProperty()` that you can use to adjust the line generation. This is important, because the [CSS typed OM](https://www.w3.org/TR/css-typed-om-1/) allows for intuitive and easy processing of values.
 
