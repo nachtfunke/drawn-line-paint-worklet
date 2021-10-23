@@ -1,6 +1,6 @@
 {
-  "name": "Drawn Line CSS paintWorklet",
-  "version": "0.0.0",
+  "name": "drawn-line-paint-worklet",
+  "version": "1.0.0",
   "description": "CSS paint worklet for squiggly lines that look hand-drawn.",
   "main": "dist/worklet.js",
   "scripts": {
