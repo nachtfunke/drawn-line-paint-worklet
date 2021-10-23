@@ -21,8 +21,6 @@ class DrawnLine {
     const lineStrength = props.get('--drawn-line-strength').value || 2;
     const verticalBasePos = geom.height - lineStrength - randomYRange;
     const fuzzyness = props.get('--drawn-line-wiggle').value || 1;
-
-    console.log(segmentTargetLength);
     
     const color = props.get('--drawn-line-color').toString() || 'black';
     
